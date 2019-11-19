@@ -1,0 +1,81 @@
+page_name,page_component_type,page_section_number,order_number,content,language
+Home/Python/Python Core/File IO,h3,1,1,File modes,
+Home/Python/Python Core/File IO,code,1,2,"# open a file and return a corresponding file object\nf = open(\n    \""filename\"",\n    mode=\'r\',   # we specify file open mode here\n    buffering=-1,\n    encoding=None,\n    errors=None,\n    newline=None,\n    closefd=True,\n    opener=None\n)",python
+Home/Python/Python Core/File IO,paragraph,1,3,"Character   Meaning\n---------   ------------\n  \'r\'       open for reading (DEFAULT)\n  \'w\'       open for writing, truncating the file first\n  \'x\'       open for exclusive creation, failing if the file already exists\n  \'a\'       open for writing, appending to the end of the file if it exists\n  \'b\'       binary mode\n  \'t\'       text mode (DEFAULT)\n  \'+\'       open a disk file for updating (reading and writing)\n\nWe must have exactly one of create/read/write/append mode and at most one plus.\n\nThe mode \'w+\' opens and trancates the file to 0 bytes.\nThe modes \'r+\' and \'a+\' open the file without trancation.",
+Home/Python/Python Core/File IO,h3,2,1,Open a file (in different modes),
+Home/Python/Python Core/File IO,code,2,2,"# open a file for reading in a text mode\nopen(\'temp.txt\')\nopen(\'temp.txt\', \'r\')\nopen(\'temp.txt\', \'rt\')\nopen(\'temp.txt\', \'rt\', encoding=\'utf-8\')",python
+Home/Python/Python Core/File IO,code,2,3,"# open a file for writing in a text or binary mode\nopen(\'temp.txt\', \'w\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'wt\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'wb\')",python
+Home/Python/Python Core/File IO,code,2,4,"# open a file for writing (appending to the end)\n# in a text or binary mode\nopen(\'temp.txt\', \'a\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'at\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'ab\')",python
+Home/Python/Python Core/File IO,code,2,5,"# open a file for updating (reading and writing)\n# in a text or binary mode\nopen(\'temp.txt\', \'r+\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'w+\', encoding=\'utf-8\')  # will first truncate the file\nopen(\'temp.txt\', \'a+\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'r+t\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'w+t\', encoding=\'utf-8\')  # will first truncate the file\nopen(\'temp.txt\', \'a+t\', encoding=\'utf-8\')\nopen(\'temp.txt\', \'r+b\')\nopen(\'temp.txt\', \'w+b\')  # will first truncate the file\nopen(\'temp.txt\', \'a+b\')",python
+Home/Python/Python Core/File IO,h3,3,1,Close a file,
+Home/Python/Python Core/File IO,code,3,2,"f = open(\'temp.txt\', \'rt\', encoding=\'utf-8\')\ntry:\n    print(f.read())\nfinally:\n    f.close()",python
+Home/Python/Python Core/File IO,h3,4,1,Open and close a file with a context manager,
+Home/Python/Python Core/File IO,code,4,2,"with open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.read())",python
+Home/Python/Python Core/File IO,h3,5,1,Reading from a file,
+Home/Python/Python Core/File IO,code,5,10,"# read the contents of a file as a list of lines\n# (no more lines will be read if the total size in bytes or characters of\n# all lines so far exceeds 3)\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.readlines(3))",python
+Home/Python/Python Core/File IO,h5,5,2,read(),
+Home/Python/Python Core/File IO,code,5,3,"# read all contents of a file\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.read())",python
+Home/Python/Python Core/File IO,code,5,4,"# at most read the specified number of characters or bytes\n# (depending on the mode) from a file\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.read(5))",python
+Home/Python/Python Core/File IO,h5,5,5,readline(),
+Home/Python/Python Core/File IO,code,5,6,"# read one line from a file\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.readline())",python
+Home/Python/Python Core/File IO,code,5,7,"# at most read the specified number of characters or bytes\n# (depending on the mode) from a line of a file\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.readline(5))",python
+Home/Python/Python Core/File IO,h5,5,8,readlines(),
+Home/Python/Python Core/File IO,code,5,9,"# read the contents of a file as a list of lines\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    print(f.readlines())",python
+Home/Python/Python Core/File IO,h3,6,1,seek(),
+Home/Python/Python Core/File IO,code,6,2,"# seek() will change the stream position to the given byte offset\n# (here the contents of a file will be read 3 times)\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    for _ in range(3):\n        print(f.read())\n        f.seek(0)",python
+Home/Python/Python Core/File IO,h3,7,1,tell(),
+Home/Python/Python Core/File IO,code,7,2,"# tell() will return the current stream position\n# (here the second line of a file will be read 3 times)\nwith open(\'temp.txt\', \'rt\', encoding=\'utf-8\') as f:\n    f.readline()\n    line_2 = f.tell()\n    for _ in range(3):\n        f.seek(line_2)\n        print(f.readline())",python
+Home/Python/Python Core/File IO,h3,8,1,Writing to a file,
+Home/Python/Python Core/File IO,h5,8,2,write(),
+Home/Python/Python Core/File IO,code,8,3,"# write a string to a file\nwith open(\'temp.txt\', \'wt\', encoding=\'utf-8\') as f:\n    chars_num = f.write(\""aaa\\nbbb\\n\"")\n    print(chars_num)",python
+Home/Python/Python Core/File IO,code,8,4,"# write bytes to a file\nwith open(\'temp.txt\', \'wb\') as f:\n    bytes_num = f.write(\""aaa\\n\u044f\u044f\u044f\\n\"".encode(encoding=\'utf-8\'))\n    print(bytes_num)",python
+Home/Python/Python Core/File IO,h5,8,5,writelines(),
+Home/Python/Python Core/File IO,paragraph,8,6,The writelines() method writes the sequence of lines to a file.\nNo line endings are appended to each sequence item.\nIt\u2019s up to you to add the appropriate line ending(s).,
+Home/Python/Python Core/File IO,code,8,7,"# write a sequence of lines to a file\nwith open(\'temp.txt\', \'wt\', encoding=\'utf-8\') as f:\n    lines = [\'aaa\\n\', \'bbb\\n\']\n    f.writelines(lines)",python
+Home/Python/Python Core/File IO,code,8,8,"# write bytes to a file\nwith open(\'temp.txt\', \'wb\') as f:\n    lines = [\n        \'aaa\\n\'.encode(encoding=\'utf-8\'),\n        \'\u044f\u044f\u044f\\n\'.encode(encoding=\'utf-8\')\n    ]\n    f.writelines(lines)",python
+Home/Python/Python Core/Comprehensions,h3,1,1,List comprehension,
+Home/Python/Python Core/Comprehensions,code,1,2,"squares = [n ** 2 for n in range(1, 11)]\nprint(squares)",python
+Home/Python/Python Core/Comprehensions,h3,2,1,Set comprehension,
+Home/Python/Python Core/Comprehensions,code,2,2,"squares = {n ** 2 for n in range(1, 11)}\nprint(squares)\nprint(type(squares))",python
+Home/Python/Python Core/Comprehensions,h3,3,1,Dictionary comprehension,
+Home/Python/Python Core/Comprehensions,code,3,2,"from pprint import pprint as pp\n\ncountry_to_capital = {\n    \'United Kingdom\': \'London\',\n    \'Brazil\': \'Brazilia\',\n    \'Morocco\': \'Rabat\',\n    \'Sweden\': \'Stockholm\'\n}\n\ncapital_to_country = {\n    capital: country for country, capital in country_to_capital.items()\n}\n\npp(capital_to_country)",python
+Home/Python/Python Core/Comprehensions,h3,4,1,Generator comprehension,
+Home/Python/Python Core/Comprehensions,code,4,2,"million_squares = (x ** 2 for x in range(1, 1_000_001))\nprint(sum(million_squares))\n\n# the same idea as in previous two lines\nmillion_squares = sum(x ** 2 for x in range(1, 1_000_001))\nprint(million_squares)",python
+Home/Python/Python Core/Comprehensions,h3,5,1,Filtering predicates,
+Home/Python/Python Core/Comprehensions,code,5,2,"from math import sqrt\n\n\ndef is_prime(x):\n    if x < 2:\n        return False\n    for i in range(2, int(sqrt(x)) + 1):\n        if x % i == 0:\n            return False\n    return True\n\n\nprimes = [x for x in range(101) if is_prime(x)]\nprint(primes)",python
+Home/Python/Python Core/Decorators,h3,1,1,The simplest possible decorator function (does nothing at all),
+Home/Python/Python Core/Decorators,code,1,2,"def decorator_func(original_func):\n    def wrapper_func(*args, **kwargs):\n        return original_func(*args, **kwargs)\n    return wrapper_func\n\n\ndef my_func():\n    return \'Hi\'\n\n\nmy_func = decorator_func(my_func)   # we decorated the function \'manually\'\nprint(my_func())\n\n\n@decorator_func   # another way to decorate a function with our decorator\ndef my_func_2():\n    return \'Hello\'\n\nprint(my_func_2())",python
+Home/Python/Python Core/Decorators,h3,2,1,Decorator example (logger),
+Home/Python/Python Core/Decorators,code,2,2,"def my_logger(orig_func):\n    import logging\n    logging.basicConfig(\n        filename=\'{}.log\'.format(orig_func.__name__),\n        level=logging.INFO\n    )\n\n    def wrapper(*args, **kwargs):\n        logging.info(\n            \'Ran with args: {}, and kwargs: {}\'.format(args, kwargs)\n        )\n        return orig_func(*args, **kwargs)\n\n    return wrapper\n\n\n@my_logger\ndef display_info(name, age):\n    print(\'name = \', name)\n    print(\'age = \', age)\n\n\ndisplay_info(\'Bob\', age=20)",python
+Home/Python/Python Core/Decorators,h3,3,1,Decorator example (timer),
+Home/Python/Python Core/Decorators,code,3,2,"import time\n\n\ndef my_timer(orig_func):\n    import time\n\n    def wrapper(*args, **kwargs):\n        t1 = time.time()\n        result = orig_func(*args, **kwargs)\n        t2 = time.time()\n        print(\'{} ran in: {} sec\'.format(orig_func.__name__, t2-t1))\n        return result\n\n    return wrapper\n\n\n@my_timer\ndef my_func(n):\n    time.sleep(n)\n\n\nmy_func(3)",python
+Home/Python/Python Core/Decorators,h3,4,1,Solving the problem with the name of a decorated function,
+Home/Python/Python Core/Decorators,code,4,2,"import functools\n\n\ndef my_logger(orig_func):\n    import logging\n    logging.basicConfig(\n        filename=\'{}.log\'.format(orig_func.__name__),\n        level=logging.INFO\n    )\n\n    @functools.wraps(orig_func)\n    def wrapper(*args, **kwargs):\n        logging.info(\n            \'Ran with args: {}, and kwargs: {}\'.format(args, kwargs)\n        )\n        return orig_func(*args, **kwargs)\n\n    return wrapper\n\n\n@my_logger\ndef my_func():\n    pass\n\n\nprint(my_func.__name__)  # now this atribute is set correctly",python
+Home/Python/Python Core/Decorators,h3,5,1,Decorators with arguments,
+Home/Python/Python Core/Decorators,code,5,2,"def decor_func_builder(top, bottom):\n\n    # The function \'decor_func_builder\' is NOT a decorator, it is just a\n    # regular function that returns a decorator. The function \'decor_func\'\n    # is a decorator.\n\n    def decor_func(original_func):\n\n        def wrapper_func(*args, **kwargs):\n            print(top)\n            original_func(*args, **kwargs)\n            print(bottom)\n\n        return wrapper_func\n\n    return decor_func\n\n\n@decor_func_builder(\'Top\', \'Bottom\')\ndef my_func():\n    print(\'Hi\')\n\n\nmy_func()",python
+Home/Python/Python Core/Truth Value Testing,h3,1,1,Objects truth value testing,
+Home/Python/Python Core/Truth Value Testing,paragraph,1,2,"By default, an object is considered true unless its class defines\neither a __bool__() method that returns False or a __len__() method\nthat returns zero, when called with the object.",
+Home/Python/Python Core/Truth Value Testing,h3,2,1,Constants defined to be false: None and False,
+Home/Python/Python Core/Truth Value Testing,code,2,2,"falsy_constants = [\n    None,\n    False\n]\n\nfor const in falsy_constants:\n    print(bool(const))",python
+Home/Python/Python Core/Truth Value Testing,h3,3,1,Zero of any numeric type is false,
+Home/Python/Python Core/Truth Value Testing,code,3,2,"from decimal import Decimal\nfrom fractions import Fraction\n\nzeros = [\n    0,\n    0.0,\n    0j,\n    Decimal(0),\n    Fraction(0, 1)\n]\n\nfor zero in zeros:\n    print(bool(zero))",python
+Home/Python/Python Core/Truth Value Testing,h3,4,1,Empty sequences and collections are false,
+Home/Python/Python Core/Truth Value Testing,code,4,2,"empty_sequences = [\n    \'\',\n    (),\n    [],\n    {},\n    set(),\n    range(0)\n]\n\nfor sequence in empty_sequences:\n    print(bool(sequence))",python
+Home/Python/Python Core/Truth Value Testing,h3,5,1,The boolean operations \'or\' and \'and\' always return one of their operands,
+Home/Python/Python Core/Truth Value Testing,code,5,2,print(\'black\' or \'white\')\nprint(\'black\' and \'white\'),python
+Home/Python/Python Core/Variable Scopes,h3,1,1,Scopes,
+Home/Python/Python Core/Variable Scopes,paragraph,1,2,"Scopes are contexts in which named references can be looked up.\n\nThere are four scopes in Python:\n  Local      - Inside the current function\n  Enclosing  - Any and all enclosing functions\n  Global     - Top-level of a module\n  Built-in   - Provided by the builtins module\n\nImportant:\nBlocks of code demarkated by indentation do not create their own\nscopes (for loops, while loops etc)",
+Home/Python/Python Core/Variable Scopes,h3,2,1,The \'global\' keyword,
+Home/Python/Python Core/Variable Scopes,paragraph,2,2,"With the \'global\' keyword, you\'re telling Python to use the globally\ndefined variable instead of locally defining a new one",
+Home/Python/Python Core/Variable Scopes,code,2,3,count = 0\n\n\ndef set_count(value):\n    global count\n    count = value\n    print(\'local count = {}\'.format(count))\n\n\nprint(\'global count = {}\'.format(count))\nset_count(5)\nprint(\'global count = {}\'.format(count)),python
+Home/Python/Python Core/Variable Scopes,h3,3,1,The \'nonlocal\' keyword,
+Home/Python/Python Core/Variable Scopes,paragraph,3,2,"The \'nonlocal\' keyword is useful in nested functions.\nIt causes the variable to refer to the previously bound variable\nin the closest enclosing scope. In other words, it will prevent\nthe variable from trying to bind locally first, and force it to go\na level \'higher up\'.",
+Home/Python/Python Core/Variable Scopes,code,3,3,count = 0\n\n\ndef outer():\n    count = 100\n    print(\'outer count = {}\'.format(count))\n\n    def inner():\n        nonlocal count\n        count = 200\n        print(\'inner count = {}\'.format(count))\n\n    inner()\n    print(\'outer count = {}\'.format(count))\n\n\nprint(\'global count = {}\'.format(count))\nouter()\nprint(\'global count = {}\'.format(count)),python
+Home/Python/Python Standard Library/CSV Module,h3,1,1,Read from csv file,
+Home/Python/Python Standard Library/CSV Module,code,1,2,"import csv\n\nwith open(\'students.csv\') as csv_file:\n    csv_reader = csv.reader(csv_file, delimiter=\',\')\n\n    for line in csv_reader:\n        print(line)",python
+Home/Python/Python Standard Library/CSV Module,h3,2,1,Write to csv file,
+Home/Python/Python Standard Library/CSV Module,code,2,2,"import csv\n\ndata = [\n    [\'first_name\', \'last_name\', \'email\'],\n    [\'Bob\', \'Black\', \'bob@email.com\'],\n    [\'Alice\', \'White\', \'alice@email.com\']\n]\n\nwith open(\'students.csv\', \'w\', newline=\'\') as csv_file:\n    csv_writer = csv.writer(csv_file, delimiter=\';\')\n\n    for line in data:\n        csv_writer.writerow(line)",python
+Home/Python/Python Standard Library/CSV Module,h3,3,1,Read from csv file (each line will be dict),
+Home/Python/Python Standard Library/CSV Module,code,3,2,"import csv\n\nwith open(\'students.csv\') as csv_file:\n    csv_reader = csv.DictReader(csv_file, delimiter=\',\')\n\n    for line in csv_reader:\n        print(line[\'first_name\'], end=\' \')\n        print(line[\'last_name\'])",python
+Home/Python/Python Standard Library/CSV Module,h3,4,1,Write to csv file from dicts,
+Home/Python/Python Standard Library/CSV Module,code,4,2,"data = [\n    {\n        \'first_name\': \'Bob\',\n        \'last_name\': \'Black\',\n        \'email\': \'bob@email.com\'\n    },\n    {\n        \'first_name\': \'Alice\',\n        \'last_name\': \'White\',\n        \'email\': \'alice@email.com\'\n    }\n]\n\nwith open(\'students.csv\', \'w\', newline=\'\') as csv_file:\n    fieldnames = [\'first_name\', \'last_name\', \'email\']\n\n    csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames, delimiter=\',\')\n\n    csv_writer.writeheader()\n\n    for student in data:\n        csv_writer.writerow(student)",python
